@@ -39,13 +39,13 @@
     {% block extra_css %}{% endblock %}
 </head>
 <body class="d-flex flex-column min-vh-100">
-    <nav class="navbar navbar-expand-lg navbar-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container">
-            <a class="navbar-brand" href="/">Modern Converter</a>
+            <a class="navbar-brand" href="{{ url_for('home') }}">Modern Converter</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="d-flex justify-content-between align-items-center collapse navbar-collapse" id="navbarNav">
+            <div class="collapse navbar-collapse" id="navbarNav">
                 <div class="px-2"></div>
                 <div class="navbar-nav">
                     {% if session.get('user_id') %}
@@ -58,6 +58,7 @@
             </div>
         </div>
     </nav>
+    
 
     <main class="flex-grow-1 container py-4">
         {% block body %}{% endblock %}
