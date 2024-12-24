@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Modern Converter{% endblock %}</title>
+    <link href="{{ url_for('static',filename='css/bootstrap.min.css') }}" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f0f8ff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .auth-form {
+            background-color: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            padding: 2rem;
+        }
+        .form-control {
+            margin-bottom: 1rem;
+        }
+        .btn-custom {
+            border-radius: 30px;
+            padding: 10px 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+        .btn-custom:hover {
+            transform: scale(1.05);
+        }
+    </style>
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="d-flex flex-column min-vh-100">
+    <div class="container pt-5 mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-4">
+                <div class="auth-form">
+                    <h1 class="text-center mb-4 text-primary">Login</h1>
+                    <form action="{{ url_for('login') }}" method="POST" class="form">
+                        <div style="padding: 5px">
+                            <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="Alamat Email"
+                            class="form-control"
+                            required
+                            />
+                        </div>
+                        <div style="padding: 5px">
+                            <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Kata Sandi"
+                            class="form-control"
+                            required
+                            />
+                        </div>
+                        <div class="text-center mt-3">
+                            <button type="submit" class="btn btn-primary w-100">Masuk</button>
+                        </div>
+                    </form>
+                    <div class="text-center mt-3">
+                        <p>Belum punya akun? <a href="{{ url_for('register') }}">Daftar di sini</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-primary text-white py-3 mt-auto">
+        <div class="container text-center">
+            &copy; 2024 Modern Converter. All rights reserved.
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static',filename='js/bootstrap.bundle.min.js') }}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
+
+

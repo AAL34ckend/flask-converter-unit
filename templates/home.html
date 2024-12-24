@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Modern Converter{% endblock %}</title>
+    <link href="{{ url_for('static',filename='css/bootstrap.min.css') }}" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f0f8ff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .navbar {
+            background-color: #3b82f6 !important;
+        }
+        .converter-container {
+            background-color: white;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        .nav-link {
+            color: white !important;
+            transition: opacity 0.3s ease;
+        }
+        .nav-link:hover {
+            opacity: 0.8;
+        }
+        .btn-primary {
+            background-color: #3b82f6;
+            border-color: #3b82f6;
+        }
+        .btn-primary:hover {
+            background-color: #2563eb;
+            border-color: #2563eb;
+        }
+        .modal-content {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+    {% block extra_css %}
+    <style>
+        .hero {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            padding: 4rem 0;
+            margin-bottom: 2rem;
+        }
+        .converter-card {
+            transition: all 0.3s ease-in-out;
+            border: none;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .converter-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+        .icon-large {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        .btn-custom {
+            border-radius: 30px;
+            padding: 10px 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+        .btn-custom:hover {
+            transform: scale(1.05);
+        }
+    </style>
+    {% endblock %}
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="{{ url_for('home') }}">Modern Converter</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="d-flex justify-content-between align-items-center collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/length/">Panjang</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/mass/">Berat</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/volume/">Volume</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/temperature/">Temperatur</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/time/">Waktu</a>
+                    </li>
+                </ul>
+                <div class="navbar-nav">
+                    {% if session.get('user_id') %}
+                        <a href="{{ url_for('logout') }}" class="nav-link">Logout</a>
+                    {% else %}
+                        <a href="{{ url_for('login') }}" class="nav-link">Masuk</a>
+                        <a href="{{ url_for('register') }}" class="nav-link">Daftar</a>
+                    {% endif %}
+                </div>
+                
+            </div>
+        </div>
+    </nav>
+
+    {%block body%}
+    <main class="flex-grow-1 container py-4">
+        <div class="hero">
+            <div class="container text-center">
+                <h1 class="display-4 fw-bold">Selamat Datang di Konverter Satuan</h1>
+                <p class="lead">Konversi berbagai satuan dengan presisi dan kemudahan</p>
+            </div>
+        </div>
+        
+        <div class="container">
+            <div class="row mb-4">
+                <div class="col-md-8 mx-auto text-center">
+                    <h2 class="fw-bold">Pilih Konverter</h2>
+                    <p class="lead">Temukan alat konversi yang Anda butuhkan:</p>
+                </div>
+            </div>
+        
+            <div class="row row-cols-1 row-cols-md-3 g-4 mb-5">
+                <div class="col">
+                    <div class="card h-100 converter-card bg-light">
+                        <div class="card-body text-center p-4">
+                            <i class="bi bi-rulers icon-large text-primary"></i>
+                            <h5 class="card-title fw-bold">Panjang</h5>
+                            <p class="card-text">Konversi berbagai satuan panjang, dari yottameter hingga panjang Planck.</p>
+                            <a href="{{ url_for('length') }}" class="btn btn-primary btn-custom mt-3">
+                                <i class="bi bi-arrow-right-circle me-2"></i>Konversi Panjang
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100 converter-card bg-light">
+                        <div class="card-body text-center p-4">
+                            <i class="bi bi-box-seam icon-large text-success"></i>
+                            <h5 class="card-title fw-bold">Massa</h5>
+                            <p class="card-text">Konversi satuan massa, termasuk pengukuran metrik dan imperial.</p>
+                            <a href="{{ url_for('mass') }}" class="btn btn-success btn-custom mt-3">
+                                <i class="bi bi-arrow-right-circle me-2"></i>Konversi Massa
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100 converter-card bg-light">
+                        <div class="card-body text-center p-4">
+                            <i class="bi bi-droplet icon-large text-info"></i>
+                            <h5 class="card-title fw-bold">Volume</h5>
+                            <p class="card-text">Konversi antara berbagai satuan volume untuk cairan dan padatan.</p>
+                            <a href="{{ url_for('volume') }}" class="btn btn-info btn-custom mt-3">
+                                <i class="bi bi-arrow-right-circle me-2"></i>Konversi Volume
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100 converter-card bg-light">
+                        <div class="card-body text-center p-4">
+                            <i class="bi bi-thermometer-half icon-large text-danger"></i>
+                            <h5 class="card-title fw-bold">Suhu</h5>
+                            <p class="card-text">Konversi antara Celsius, Fahrenheit, Kelvin, dan lainnya.</p>
+                            <a href="{{ url_for('temperature') }}" class="btn btn-danger btn-custom mt-3">
+                                <i class="bi bi-arrow-right-circle me-2"></i>Konversi Suhu
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100 converter-card bg-light">
+                        <div class="card-body text-center p-4">
+                            <i class="bi bi-clock icon-large text-warning"></i>
+                            <h5 class="card-title fw-bold">Waktu</h5>
+                            <p class="card-text">Konversi antara berbagai satuan waktu, dari detik hingga abad.</p>
+                            <a href="{{ url_for('time') }}" class="btn btn-warning btn-custom mt-3">
+                                <i class="bi bi-arrow-right-circle me-2"></i>Konversi Waktu
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="row">
+                <div class="col-md-8 mx-auto text-center">
+                    <h3 class="fw-bold">Mengapa Memilih Konverter Satuan Kami?</h3>
+                    <p class="lead">
+                        Kebanyakan konverter online hanya menawarkan satuan dasar, tetapi situs web kami menyediakan berbagai satuan yang luas untuk setiap jenis pengukuran. Dari konversi sehari-hari hingga perhitungan ilmiah, kami siap membantu Anda.
+                    </p>
+                    <a href="#" class="btn btn-lg btn-primary btn-custom mt-4">
+                        <i class="bi bi-lightning-charge me-2"></i>Mulai Konversi Sekarang
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+    {%endblock body%}
+
+    <footer class="bg-primary text-white py-3 mt-auto">
+        <div class="container text-center">
+            &copy; 2024 Modern Converter. All rights reserved.
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static',filename='js/bootstrap.bundle.min.js') }}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+
+</html>
+

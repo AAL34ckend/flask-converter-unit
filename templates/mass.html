@@ -1,0 +1,63 @@
+{% extends 'home.html' %}
+
+{% block title %}Konversi Berat{% endblock %}
+
+{% block body %}
+<div class="my-4 py-4">
+    <div class="converter-container mx-auto p-4 rounded-lg" style="max-width: 500px;">
+        <h1 class="text-center mb-4 text-primary">Konversi Satuan Berat</h1>
+        <form method="post" action="">
+            <div class="mb-3">
+                <label for="value_to_convert" class="form-label">Konversi</label>
+                <input type="text" class="form-control" id="value_to_convert" name="value_to_convert" placeholder="Masukkan nilai" required>
+            </div>
+            
+            <div class="mb-3">
+                <label for="unit_to_convert" class="form-label">Dari</label>
+                <select class="form-select" id="unit_to_convert" name="unit_to_convert" required>
+                    <option value="" selected disabled hidden>Pilih Satuan</option>
+                    {% for unit, details in units.items() %}
+                        <option value="{{ unit }}">{{ unit }} ({{ details.abbreviation }})</option>
+                    {% endfor %}
+                </select>
+            </div>
+    
+            <div class="mb-3">
+                <label for="unit_to_convert_to" class="form-label">Ke</label>
+                <select class="form-select" id="unit_to_convert_to" name="unit_to_convert_to" required>
+                    <option value="" selected disabled hidden>Pilih Satuan</option>
+                    {% for unit, details in units.items() %}
+                        <option value="{{ unit }}">{{ unit }} ({{ details.abbreviation }})</option>
+                    {% endfor %}
+                </select>
+            </div>
+    
+            <div class="d-grid">
+                <button type="submit" class="btn btn-primary">Konversi</button>
+            </div>
+        </form>
+    
+        {% if output %}
+        <div class="alert alert-success mt-3" role="alert">
+            <h4 class="alert-heading">Hasil Konversi</h4>
+            <p>{{ output }}</p>
+        </div>
+        {% endif %}
+    
+        {% if warnings %}
+        <div class="alert alert-warning mt-3" role="alert">
+            <h4 class="alert-heading">Peringatan</h4>
+            <p>{{ warnings }}</p>
+        </div>
+        {% endif %}
+    
+        {% if invalid_input_warning %}
+        <div class="alert alert-danger mt-3" role="alert">
+            <h4 class="alert-heading">Error</h4>
+            <p>Hanya angka yang diperbolehkan bukan huruf.</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
